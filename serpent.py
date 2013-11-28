@@ -59,7 +59,6 @@ module
 """
 
 _AUTO_REMOVE_SERPENT_PYC = True
-_KEEP_OLD SOURCE = True
 
 """alphabet
 
