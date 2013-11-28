@@ -1,6 +1,13 @@
 Serpent
 =======
-Transforms your python code into a serpent and sword
+Transforms your python code into a serpent and sword!
+
+###Technical
+
+- Runs on most verisons of linux
+- Tested on python 2.7 but may work with 3.x
+
+###Example
 
 The file below will compile and run
 
@@ -70,19 +77,19 @@ import serpent
                               \|/
                                v
                                
-Your sword will be muuccccccchhhh longer than this. I'm working on it :)                               
+Your sword will be muuccccccchhhh longer than this. I'm working on it
 """
 ```
 
 ###How to use
 
-- import serpent.py 
+- Just import serpent.py at the top of your file
 
 ```
 import serpent
 ```
 
-- write some code
+- Then write some code
 
 ```
 #!/usr/bin/python
@@ -91,19 +98,26 @@ import serpent
 print "hello world"
 ```
 
-- compile
+- Compile your file
 
 ```
 python some.file.py
 ```
 
-- Open the newly generated serpent file that's extrememly freaking long and totally wasting space but who cares it's a kickass
-  snake wrapped around a kickass sword!!
+- Open the newly generated serpent file that's extrememly freaking long and totally wasting space but who cares it's a kickass snake wrapped around a kickass sword!!
 
-## It's not JUST a snake and a sword. Compile that wild file, child.
+### It's not JUST a snake and a sword. Compile that wild file, child.
 
 ```
 python some.file.ss.py
 ```
 
-- Bam. 
+Your program should run as expected
+
+##Something to note:
+
+1) The purpose of this file is not to compress your code. In fact this will make your files larger. much, much larger. This is simply intended to amuse you.
+
+##How does this work?
+
+You can sift through the source code comments to see how this is done. I'll add a better explanation to this README in the days to come
