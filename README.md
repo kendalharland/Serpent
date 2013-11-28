@@ -25,7 +25,30 @@ import serpent
                              | | |PO0.HN7
                              | | |   *   TO0
                             z| | |TP0.ON4
-                          YO1| | |
+                           PY0 | |z
+                          PY0| | |
+                            PY0| |
+                             |PY0|
+                             | |PY0
+                             | | OP0
+                             | | |PY0
+                            z| | |PY0
+                           PY0 | |z
+                          PY0| | |
+                            PY0| |
+                             |PY0|
+                             | |PY0
+                             | | HN3
+                             | | |PT6
+                            z| | |PH0
+                           PY0 | |z
+                          PY0| | |
+                            PN3| |
+                             |PT0|
+                             | |PY0
+                             | | NY2
+                            z| | |PY0
+                          YO1| | |z
                             OH4| |
                              |HO2|
                              | |PO3
