@@ -59,6 +59,7 @@ module
 """
 
 _AUTO_REMOVE_SERPENT_PYC = True
+_KEEP_OLD SOURCE = True
 
 """alphabet
 
@@ -225,6 +226,13 @@ elif scriptType is _PYTHON:
 			"\"\"\""
 		]
 		f.write(header+"".join(content))
+
+	if _AUTO_REMOVE_SERPENT_PYC:
+		try:
+			os.remove("./serpent.pyc")
+		except OSError:
+			pass
+
 	sys.exit("Serpent file: '%s' generated" % ssoutput)
 
 else:
