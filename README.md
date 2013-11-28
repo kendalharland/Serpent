@@ -106,13 +106,11 @@ python some.file.py
 
 - Open the newly generated serpent file that's extrememly freaking long and totally wasting space but who cares it's a kickass snake wrapped around a kickass sword!!
 
-### It's not JUST a snake and a sword. Compile that wild file, child.
+#### Compile that wild file, child.
 
 ```
 python some.file.ss.py
 ```
-
-Your program should run as expected
 
 ##Something to note:
 
