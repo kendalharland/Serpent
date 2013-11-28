@@ -4,7 +4,7 @@ Transforms your python code into a serpent and sword!
 
 ###Technical
 
-- Runs on most verisons of linux
+- Runs on mac and most verisons of linux
 - Tested on python 2.7 but may work with 3.x
 
 ###Example
