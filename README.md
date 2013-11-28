@@ -116,7 +116,7 @@ Your program should run as expected
 
 ##Something to note:
 
-1) The purpose of this file is not to compress your code. In fact this will make your files larger. much, much larger. This is simply intended to amuse you.
+The purpose of this file is not to compress your code. In fact this will make your files larger. much, much larger. This is simply intended to amuse you.
 
 ##How does this work?
 
