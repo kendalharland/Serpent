@@ -37,6 +37,8 @@ import re
 import sys
 import math
 
+endmsg = None
+
 """script statuses
 
 These are used to indicate what type of script was passed 
@@ -197,6 +199,7 @@ elif scriptType is _PYTHON:
 		sys.stderr.write("Error in hex/serpent_sword conversion")
 
 	ssoutput = sys.argv[0].split('.')[0]+'.ss.py'
+
 	with open(ssoutput, 'w') as f:
 		header = "#!/usr/bin/python\nimport serpent\n\"\"\"\n"
 		content = [
@@ -226,14 +229,19 @@ elif scriptType is _PYTHON:
 		]
 		f.write(header+"".join(content))
 
-	if _AUTO_REMOVE_SERPENT_PYC:
-		try:
-			os.remove("./serpent.pyc")
-		except OSError:
-			pass
-
-	sys.exit("Serpent file: '%s' generated" % ssoutput)
+	endmsg = "Serpent file: '%s' generated" % ssoutput
 
 else:
 
-	sys.exit("SerpentError, unknown filetype (%s)" % sys.argv[0])
+	endmsg = "SerpentError, unknown filetype (%s)" % sys.argv[0]
+
+
+# Cleanup
+
+if _AUTO_REMOVE_SERPENT_PYC:
+	try:
+		os.remove("./serpent.pyc")
+	except OSError:
+		pass
+
+if not endmsg is None: sys.exit(endmsg)
