@@ -3,8 +3,7 @@
 """Serpent
 
 Badassify your python script by turning your code
-into an actual python wrapped around a sword. I'm 
-not shitting you.
+into an actual python wrapped around a sword.
 
 (More documentation to come later) 
 
@@ -38,49 +37,92 @@ import re
 import sys
 import math
 
-serpent = True
-sleep = False
+"""script statuses
+
+These are used to indicate what type of script was passed 
+to the serpent module. 
+
+_PYTHON    => convert the script to a _SERPENT file.
+_SERPENT   => execute the script.
+_BYTECODE  => let the python compiler handle execution
+"""
+
+_SERPENT = 0
+_PYTHON = 1
+_BYTECODE =2
+
+"""_AUTO_REMOVE_SERPENT_PYC
+
+Set to False to prevent autmomatic deletion of the serpent.pyc
+file that gets generated when this file is included in another
+module
+"""
+
+_AUTO_REMOVE_SERPENT_PYC = True
+
+"""alphabet
+
+This is the alphabet we are mapping our hex code to. There are
+32 symbols in the alphabet and 255 possible 2-digit hex values.
+To map a character to a value, we simply take its 32-modulus and
+append the number of its occurence in the modulus cycle, with 0
+meaning "1st", 1 mean "2nd" and so on. For example: 
+
+Given the hex digit 65:
+	
+	65 % 32 = 1
+	floor( 65 / 32 ) = 2
+
+	so the alphabet symbol for 65 is the symbol at index 1: 'PT2'.
+	65 is also the 3rd occurrence of a 32-modulus of 1 (with 1 
+	being the first occurrence and 33 being the second of course.)
+	so the code for this hex symbol is PT2
+
+"""
 
 alphabet = [
-	"PY", "PT", "PH", "PO", "PN", "YP", "YT", "YH", 
-	"YO", "YN", "TP", "TY", "TH", "TO", "TN", "HP",
-	"HY", "HT", "HO", "HN", "OP", "OY", "OT", "OH",
-	"ON", "NP", "NY", "NT", "NH", "NO", "PP", "YY"
+	"PY", "PT", "PH", "PO", "PN", "YP", "YT", "YH","YO", "YN","TP", "TY", "TH", "TO", "TN", "HP",
+	"HY", "HT", "HO", "HN", "OP", "OY", "OT", "OH",	"ON", "NP", "NY", "NT", "NH", "NO", "PP", "YY"
 ]
 
-def hex_to_serpent_sword_alphabet(hexidecimal):
-	"""hex_to_serpent_sword_alphabet"""
-	return [alphabet[digit % 32]+str(int(math.floor(digit/32))) for digit in hexidecimal]
+
+def _hex_to_serpent_sword_alphabet(hexidecimal):
+	"Convert the python bytecode into the serpent alphabet"
+	return [alphabet[digit % 32]+str(int(math.floor(float(digit)/32.0))) for digit in hexidecimal]
 
 
-def serpent_sword_alphabet_to_hex(sentence):
-	"""serpent_sword_alphabet_to_hex"""
+def _serpent_sword_alphabet_to_hex(sentence):
+	"Convert the serpent alphabet string back to python bytecode"
 	return [alphabet.index(symbol[0:-1]) + int(symbol[-1])*32 for symbol in sentence]
 
 
-def gen_serpent_body(sss):
+def _gen_serpent_body(sss):
+	"Generate the serpent body of the bytecode file"
 	stage = {
-		"0": " "*27+ "%s | |z\n",
-		"1": " "*26+"%s| | |\n",
-		"2": " "*28+  "%s| |\n",
-		"3": " "*29+   "|%s|\n",
-		"4": " "*29+  "| |%s\n",
-		"5": " "*29+  "| | %s\n",
-		"6": " "*29+  "| | |%s\n",
-		"7": " "*28+ "z| | |%s\n",
+		"0": " "*8+ "%s | |z\n",
+		"1": " "*7+"%s| | |\n",
+		"2": " "*9+  "%s| |\n",
+		"3": " "*10+   "|%s|\n",
+		"4": " "*10+  "| |%s\n",
+		"5": " "*10+  "| | %s\n",
+		"6": " "*10+  "| | |%s\n",
+		"7": " "*9+ "z| | |%s\n",
 	}
 
-	i, body = 1,""
+	index = 1
+	body = ""
+
 	while len(sss) > 0:
-		body += stage[str(i)] % sss.pop(0)
-		i = (i + 1) % 8
-	while i % 8 != 0:
-		body += stage[str(i)] % 'zz '
-		i = (i + 1) % 8
+		body += stage[str(index)] % sss.pop(0)
+		index = (index + 1) % 8
+	while index % 8 != 0:
+		body += stage[str(index)] % 'zz '
+		index = (index + 1) % 8
 	return body
 
 
-def lex_hex(infile):
+def _lex_hex(infile):
+	"Extract the serpent string from the ss file"
 	with open(infile, 'r') as source:
 		regex = re.compile(r'[PYTHON][PYTHON][0-9]')
 		tokens = []
@@ -94,32 +136,48 @@ def lex_hex(infile):
 		return tokens
 
 
-try:
-	assert sys.argv[0].split('.')[-2][0:2] == "ss"
-except AssertionError:
-	serpent = False
-
-if sys.argv[0].split('.')[-1] == "pyc":
-	sleep = True
+def _get_script_type(script):
+	"Return the type of script that was called"
+	if script.split('.')[-1] == "py":
+		if script.split('.')[-2][0:2] == "ss":
+			return _SERPENT
+		return _PYTHON
+	elif script.split('.')[-1] == "pyc":
+		return _BYTECODE
 	
 
-if sleep:
+"""Execution
+
+Here we decided if we should sleep, execute the program,or convert it to serpent code.
+If the program is being executed, we converted the serpent code within it back to bytecode,
+write the pyc file, call it as a subprocess and then tell this module to sleep until complete.
+If the file is being converted we compile the source, then convert the bytecode to serpent 
+code and draw the serpent code to the new ss.py file with this module as the only imported
+module. When that ss.py file is compiled, this file do extract the code and run the pyc file.
+This is easier than obfuscating the actual python code because we don't need to worry about 
+whitespace when writing the pyc file.
+"""
+
+scriptType = _get_script_type(sys.argv[0])
+
+if scriptType is _BYTECODE:
+
 	pass
 
-elif serpent:
-	
-	pyc = serpent_sword_alphabet_to_hex(lex_hex(sys.argv[0]))
-	pycout = ".".join(sys.argv[0].split(".")[0:-1])+'.pyc'
+elif scriptType is _SERPENT:
+
+	pyc = _serpent_sword_alphabet_to_hex(_lex_hex(sys.argv[0]))
+	pycout = ".".join(sys.argv[0].split(".")[0:-1])+".pyc"
 
 	with open(pycout, "wb") as f:
-		for val in pyc:	
+		for val in pyc:
 			f.write(chr(val))
 
 	cmd = "python %s %s" % (pycout, " ".join(sys.argv[1:]))
 	subprocess.call(cmd, shell=True)
 	os.remove(pycout)
 
-else:
+elif scriptType is _PYTHON:
 
 	compiler.compileFile(sys.argv[0])
 	tmp, sss = [], []
@@ -130,8 +188,8 @@ else:
 				tmp.append(int(char.encode('hex'), 16))
 	os.remove(sys.argv[0]+'c') # Delete temporary pyc file
 
-	sss = hex_to_serpent_sword_alphabet(tmp)
-	rev = serpent_sword_alphabet_to_hex(sss)
+	sss = _hex_to_serpent_sword_alphabet(tmp)
+	rev = _serpent_sword_alphabet_to_hex(sss)
 	
 	try:
 		assert rev == tmp
@@ -141,17 +199,20 @@ else:
 	ssoutput = sys.argv[0].split('.')[0]+'.ss.py'
 	with open(ssoutput, 'w') as f:
 		header = "#!/usr/bin/python\nimport serpent\n\"\"\"\n"
-		hb = " "*30+"___\n"+" "*29+"{ _ }\n"+" "*30+"|/|\n"+" "*29+"{___}\n"
-		mh = " "*30+"|_|\n"+" "*30+"|/|\n"
-		g1 = " "*20+"."+" "*9+"|/|"+" "*9+".\n"+" "*20+"(\\"+"_"*8+"|w|"+"_"*8+"/)\n"
-		g2 = " "*20+"( "+"_"*19+" )\n"+" "*21+"v       | | |       v\n"
-		bl = (" "*29+"| | |\n")*3
-		s1 = " "*29+"| | |"+sss.pop(0)+'.'+sss.pop(0)+'\n'
-		s2 = " "*29+"| | |"+" "*3+"*"+" "*3+sss.pop(0)+'\n'
-		s3 = " "*28+"z| | |"+sss.pop(0)+'.'+sss.pop(0)+'\n'
-		serpentBody = gen_serpent_body(sss)
-		bm = (" "*29+"z | |"+'\n')*2+(" "*29+"| | |"+'\n')*2
-		sp = " "*29+" \|/\n"+" "*31+'v\n'
-		f.write(header+hb+mh+g1+g2+bl+s1+s2+s3+serpentBody+bm+sp+"\"\"\"")
-
+		content = [
+			" "*11+"___\n"+" "*10+"{ _ }\n"+" "*11+"|/|\n"+" "*10+"{___}\n",
+			" "*11+"|_|\n"+" "*11+"|/|\n"+" "*1+"."+" "*9+"|/|"+" "*9+".\n",
+			" "*1+"(\\"+"_"*8+"|w|"+"_"*8+"/)\n"+" "*1+"( "+"_"*19+" )\n",
+			" "*2+"v"+" "*7+"| | |"+" "*7+"v\n"+(" "*10+"| | |\n")*3,
+			" "*10+"| | |"+sss.pop(0)+'.'+sss.pop(0)+"\n"+" "*10+"| | |",
+			" "*3+"*"+" "*3+sss.pop(0)+"\n"+" "*9+"z| | |"+sss.pop(0)+'.',
+			sss.pop(0)+'\n', _gen_serpent_body(sss),
+			(" "*10+"z | |"+'\n')*2+(" "*10+"| | |"+'\n')*2,
+			" "*10+" \|/\n"+" "*12+'v\n\"\"\"'
+		]
+		f.write(header+"".join(content))
 	sys.exit("Serpent file: '%s' generated" % ssoutput)
+
+else:
+
+	sys.exit("SerpentError, unknown filetype (%s)" % sys.argv[0])
