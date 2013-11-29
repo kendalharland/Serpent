@@ -75,7 +75,7 @@ Given the hex digit 65:
 	65 % 32 = 1
 	floor( 65 / 32 ) = 2
 
-	so the alphabet symbol for 65 is the symbol at index 1: 'PT2'.
+	so the alphabet symbol for 65 is the symbol at index 1: 'PT'.
 	65 is also the 3rd occurrence of a 32-modulus of 1 (with 1 
 	being the first occurrence and 33 being the second of course.)
 	so the code for this hex symbol is PT2
