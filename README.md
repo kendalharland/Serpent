@@ -9,7 +9,7 @@ Transforms your python code into a serpent and sword!
 
 ###Example
 
-The file below will compile and run
+The file below would compile and run if I didn't truncate the sword to fit on the page. (lawl)
 
 ```
 #!/usr/bin/python
