@@ -118,4 +118,4 @@ The purpose of this file is not to compress your code. In fact this will make yo
 
 ##How does this work?
 
-You can sift through the source code comments to see how this is done. I'll add a better explanation to this README in the days to come
+See this [blog post](http://kendalharland.net/Stories/Generating-a-Snake-and-Sword-from-Python-Code) for an explanation
