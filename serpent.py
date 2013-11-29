@@ -84,7 +84,7 @@ Given the hex digit 65:
 
 alphabet = [
 	"PY", "PT", "PH", "PO", "PN", "YP", "YT", "YH","YO", "YN","TP", "TY", "TH", "TO", "TN", "HP",
-	"HY", "HT", "HO", "HN", "OP", "OY", "OT", "OH",	"ON", "NP", "NY", "NT", "NH", "NO", "PP", "YY"
+	"HY", "HT", "HO", "HN", "OP", "OY", "OT", "OH", "ON", "NP", "NY", "NT", "NH", "NO", "PP", "YY"
 ]
 
 
