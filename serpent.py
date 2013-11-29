@@ -155,7 +155,7 @@ If the program is being executed, we converted the serpent code within it back t
 write the pyc file, call it as a subprocess and then tell this module to sleep until complete.
 If the file is being converted we compile the source, then convert the bytecode to serpent 
 code and draw the serpent code to the new ss.py file with this module as the only imported
-module. When that ss.py file is compiled, this file do extract the code and run the pyc file.
+module. When that ss.py file is compiled, this file will extract the code and run the pyc file.
 This is easier than obfuscating the actual python code because we don't need to worry about 
 whitespace when writing the pyc file.
 """
