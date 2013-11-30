@@ -5,8 +5,6 @@
 Badassify your python script by turning your code
 into an actual python wrapped around a sword.
 
-(More documentation to come later) 
-
 The MIT License (MIT)
 
 Copyright (c) 2013 Kendal Harland
@@ -150,13 +148,17 @@ def _get_script_type(script):
 
 """Execution
 
-Here we decided if we should sleep, execute the program,or convert it to serpent code.
-If the program is being executed, we converted the serpent code within it back to bytecode,
-write the pyc file, call it as a subprocess and then tell this module to sleep until complete.
-If the file is being converted we compile the source, then convert the bytecode to serpent 
-code and draw the serpent code to the new ss.py file with this module as the only imported
-module. When that ss.py file is compiled, this file will extract the code and run the pyc file.
-This is easier than obfuscating the actual python code because we don't need to worry about 
+Here we decide if we should sleep, execute the program, or
+convert it to serpent code. If the file is already a serpent
+file, we convert the serpent code within it back to bytecode,
+write the pyc file, call it as a subprocess and then tell this
+module to sleep until the main program is complete. If the 
+file is being converted we compile the source, then convert 
+the bytecode to serpent code and draw the serpent code to the
+new ss.py file with this module as the only imported module. 
+When that ss.py file is compiled, this file will extract the 
+code and run the pyc file. This is easier than obfuscating the
+actual python code because we don't need to worry about 
 whitespace when writing the pyc file.
 """
 
