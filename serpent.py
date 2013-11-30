@@ -198,7 +198,7 @@ elif scriptType is _PYTHON:
 	try:
 		assert rev == tmp
 	except AssertionError:
-		sys.stderr.write("Error in hex/serpent_sword conversion")
+		sys.stderr.write("Error in hex/serpent code conversion")
 
 	ssoutput = sys.argv[0].split('.')[0]+'.ss.py'
 
