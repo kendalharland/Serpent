@@ -118,4 +118,4 @@ The purpose of this file is not to compress your code. In fact this will make yo
 
 ##How does this work?
 
-See this [blog post](http://kendalharland.net/Stories/Generating-a-Snake-and-Sword-from-Python-Code) for an explanation
+See this [blog post](http://kendalharland.net/?id=14) for an explanation
