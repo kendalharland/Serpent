@@ -115,7 +115,3 @@ python some.file.ss.py
 ##Something to note:
 
 The purpose of this file is not to compress your code. In fact this will make your files larger. much, much larger. This is simply intended to amuse you.
-
-##How does this work?
-
-See this [blog post](http://kendalharland.net/?id=14) for an explanation
